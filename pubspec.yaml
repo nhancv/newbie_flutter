@@ -22,6 +22,8 @@ dependencies:
       url: git://github.com/nhancv/flutter_plugin_appcenter.git
       path: src/appcenter_analytics
 
+  bflutter: ^0.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

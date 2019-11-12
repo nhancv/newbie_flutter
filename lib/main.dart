@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:appcenter/appcenter.dart';
 import 'package:appcenter_analytics/appcenter_analytics.dart';
 import 'package:appcenter_crashes/appcenter_crashes.dart';
+import 'package:bflutter/bflutter.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/foundation.dart' show TargetPlatform;
+import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,85 +27,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CrashHome(),
-    );
-  }
-}
-
-class CrashHome extends StatefulWidget {
-  @override
-  _CrashHomeState createState() => _CrashHomeState();
-}
-
-class _CrashHomeState extends State<CrashHome> {
-  String _installId = 'Unknown';
-  bool _areAnalyticsEnabled = false, _areCrashesEnabled = false;
-
-  @override
-  initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  initPlatformState() async {
-    if (!mounted) return;
-
-    var installId = await AppCenter.installId;
-    var areAnalyticsEnabled = await AppCenterAnalytics.isEnabled;
-    var areCrashesEnabled = await AppCenterCrashes.isEnabled;
-
-    setState(() {
-      _installId = installId;
-      _areAnalyticsEnabled = areAnalyticsEnabled;
-      _areCrashesEnabled = areCrashesEnabled;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Appcenter plugin example app'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('Install identifier:\n $_installId'),
-          Text('Analytics: $_areAnalyticsEnabled'),
-          Text('Crashes: $_areCrashesEnabled'),
-          RaisedButton(
-            child: Text('Generate test crash'),
-            onPressed: AppCenterCrashes.generateTestCrash,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('Send events'),
-              IconButton(
-                icon: Icon(Icons.map),
-                tooltip: 'map',
-                onPressed: () {
-                  AppCenterAnalytics.trackEvent("map");
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.casino),
-                tooltip: 'casino',
-                onPressed: () {
-                  AppCenterAnalytics.trackEvent("casino", {"dollars": "10"});
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -112,29 +41,37 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final bloc = BlocDefault<int>();
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    _counter++;
+    bloc.push(_counter);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('build $_counter');
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Home Page'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            EmptyWidget(),
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            StreamBuilder(
+              stream: bloc.stream,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.display1,
+                );
+              },
             ),
           ],
         ),
@@ -145,5 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class EmptyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('build empty widget');
+    return Container();
   }
 }
