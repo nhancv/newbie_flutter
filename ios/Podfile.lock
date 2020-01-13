@@ -16,17 +16,34 @@ PODS:
   - appcenter_crashes (0.0.1):
     - AppCenter/Crashes
     - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
   - Flutter (1.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - path_provider (0.0.1):
+    - Flutter
+  - Reachability (3.2)
+  - sqflite (0.0.1):
+    - Flutter
+    - FMDB (~> 2.7.2)
 
 DEPENDENCIES:
   - appcenter (from `.symlinks/plugins/appcenter/ios`)
   - appcenter_analytics (from `.symlinks/plugins/appcenter_analytics/ios`)
   - appcenter_crashes (from `.symlinks/plugins/appcenter_crashes/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - Flutter (from `Flutter`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
   trunk:
     - AppCenter
+    - FMDB
+    - Reachability
 
 EXTERNAL SOURCES:
   appcenter:
@@ -35,16 +52,27 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/appcenter_analytics/ios"
   appcenter_crashes:
     :path: ".symlinks/plugins/appcenter_crashes/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
   AppCenter: d0b68b2a7a87ac0aed78e66f36d87fd321d0a29c
   appcenter: d85aaaf534125cf92375577f086ca0925c817d1d
   appcenter_analytics: 134239ec65a6097fee5f0407e24423f583bd5942
   appcenter_crashes: bfde7d247f431a7bbe6b038709261f0432c4b2a6
+  connectivity: 6e94255659cc86dcbef1d452ad3e0491bb1b3e75
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
 
-PODFILE CHECKSUM: 3d0b47fea56a8b83ae6f63b820d201d800e0b436
+PODFILE CHECKSUM: d6a5eef966181cbcd5960a9cb4150f11d90176fe
 
 COCOAPODS: 1.8.4
